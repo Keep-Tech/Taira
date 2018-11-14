@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.code.gson:gson:2.8.5'
+    compile 'com.gotokeep.keep:taira:0.1.0'
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
