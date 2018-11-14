@@ -1,22 +1,23 @@
 # Taira
-一个 byte 序列化库，助力使用 byte 协议的解析和生成。
+轻量的数据 byte 序列化/反序列化工具
 
-## Taira - 轻量的数据 byte 序列化/反序列化工具
-### 特点
-- 简单易用的 API
+## 特点
+- 简单易用的 API。`toBytes()`和`fromBytes()`轻松解决 byte 序列化/反序列化
 - 高效的处理效率、极小的数据量
 - 为 IoT 而生（或是任何对传输数据量有要求的场景）
 ***
-### 快速开始
 
-build.gradle
-```
+## 快速开始
+
+#### 添加依赖
+Gradle
+```gradle
 dependencies {
     compile 'com.gotokeep.keep:taira:0.1.0'
 }
 ```
-pom.xml
-```
+Pom
+```xml
 <dependency>
   <groupId>com.gotokeep.keep</groupId>
   <artifactId>taira</artifactId>
@@ -24,30 +25,28 @@ pom.xml
   <type>pom</type>
 </dependency>
 ```
+#### Sample
 
-```
-/**
- * 实现 TairaData，@ParamField 标注字段
- */
-class Foo implements TairaData {
-    @ParamField(order = 0)
-    private int value;
-    public void setValue(int value) {
-        this.value = value;
-    }
-}
-
-// 序列化/反序列化
+```java
 Foo foo = new Foo();
-foo.setValue(123);
+// 序列化到 bytes
 byte[] result = Taira.DEFAULT.toBytes(foo)
-byte[] receivedBytes = ...; // data transfer
+// 反序列化到 Object
 Foo receivedFoo = Taira.DEFAULT.fromBytes(receivedBytes);
 ```
 
+```java
+/**
+ * Model 定义
+ */
+class Foo implements TairaData {
+    @ParamField(order = 0)
+    public int value;
+}
+```
 ***
 
-### 详细使用
+## 详细使用
 
 #### TairaData
 
@@ -85,3 +84,35 @@ Foo receivedFoo = Taira.DEFAULT.fromBytes(receivedBytes);
 - TairaInternalException：内部错误，设置`Taira.DEBUG = true`时会抛出
 
 ***
+
+## 简单对比 Gson 
+
+- [Sample](https://github.com/Keep-Tech/Taira/blob/master/TairaSample/src/main/java/com/gotokeep/keep/taira/samples/Main.java)  处理一个三层嵌套包含各种类型的 data class，执行 1000 次
+- 结果：序列化/反序列化速度快于 Gson，且数据长度只有 Gson 的 1/5
+```
+// 原始 data class 结构
+fooObject: Foo{byteField=2, barField=Bar{innerArrayVal=[Baz{bazinga=1}, Baz{bazinga=3}, Baz{bazinga=5}], floatVal=123.2, shortVal=11, longVal=1242354, booleanVal=true}, intField=103, doubleField=123.21, charField=$, bytesField=[11, 22, 33, 44], stringField='world', intListField=[3, 5, 9]}
+
+// Taira 序列化
+Taira serialize x 1000 time cost: 132
+Taira serialize data size: 59
+
+// Taira 反序列化
+Taira deserialize x 1000 time cost: 58
+Taira deserialize result: Foo{byteField=2, barField=Bar{innerArrayVal=[Baz{bazinga=1}, Baz{bazinga=3}, Baz{bazinga=5}], floatVal=123.2, shortVal=11, longVal=1242354, booleanVal=true}, intField=103, doubleField=123.21, charField=$, bytesField=[11, 22, 33, 44, 0], stringField='world', intListField=[3, 5, 9]}
+
+// Gson 序列化
+Gson serialize x 1000 time cost: 218
+Gson serialize data size: 279
+
+// Gson 反序列化
+Gson deserialize x 1000 time cost: 83
+Gson deserialize result: Foo{byteField=2, barField=Bar{innerArrayVal=[Baz{bazinga=1}, Baz{bazinga=3}, Baz{bazinga=5}], floatVal=123.2, shortVal=11, longVal=1242354, booleanVal=true}, intField=103, doubleField=123.21, charField=$, bytesField=[11, 22, 33, 44], stringField='world', intListField=[3, 5, 9]}
+```
+
+***
+
+
+## License 
+
+All assets and code are under the [![license](https://img.shields.io/github/license/GarageGames/Torque3D.svg)](https://github.com/Keep-Tech/Taira/blob/master/LICENSE)
