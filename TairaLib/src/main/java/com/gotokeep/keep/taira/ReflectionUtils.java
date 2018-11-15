@@ -68,7 +68,7 @@ public class ReflectionUtils {
         try {
             Constructor[] constructors = clazz.getDeclaredConstructors();
             for (Constructor constructor : constructors) {
-                if (constructor.getParameterCount() == 0) {
+                if (constructor.getParameterTypes().length == 0) {
                     return true;
                 }
             }
