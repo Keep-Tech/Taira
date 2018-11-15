@@ -89,6 +89,7 @@ class Foo implements TairaData {
 
 - [Sample](https://github.com/Keep-Tech/Taira/blob/master/TairaSample/src/main/java/com/gotokeep/keep/taira/samples/Main.java)  处理一个三层嵌套包含各种类型的 data class，执行 1000 次
 - 结果：序列化/反序列化速度快于 Gson，且数据长度只有 Gson 的 1/5
+
 ```
 // 原始 data class 结构
 fooObject: Foo{byteField=2, barField=Bar{innerArrayVal=[Baz{bazinga=1}, Baz{bazinga=3}, Baz{bazinga=5}], floatVal=123.2, shortVal=11, longVal=1242354, booleanVal=true}, intField=103, doubleField=123.21, charField=$, bytesField=[11, 22, 33, 44], stringField='world', intListField=[3, 5, 9]}
