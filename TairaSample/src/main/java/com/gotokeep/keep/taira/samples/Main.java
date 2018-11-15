@@ -35,6 +35,7 @@ public class Main {
     public static void main(String[] args) {
         Taira.DEBUG = true;
 
+        // Init object
         Foo foo = new Foo();
         foo.setByteField((byte) 2);
         foo.setIntField(103);
@@ -60,10 +61,15 @@ public class Main {
 
         System.out.println("fooObject: " + foo.toString());
 
+        // Taira serialize
         taira(foo);
+        // Gson serialize
         gson(foo);
     }
 
+    /**
+     * Use Taira serialize/deserialize 1000 times
+     */
     private static void taira(TairaData data) {
         long serializeStart = System.currentTimeMillis();
         byte[] fooBytes = new byte[0];
@@ -82,6 +88,9 @@ public class Main {
         System.out.println("Taira deserialize result: " + String.valueOf(foo));
     }
 
+    /**
+     * Use Gson serialize/deserialize 1000 times
+     */
     private static void gson(TairaData object) {
         long serializeStart = System.currentTimeMillis();
         String json = "";
