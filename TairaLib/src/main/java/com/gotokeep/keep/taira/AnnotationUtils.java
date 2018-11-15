@@ -160,6 +160,10 @@ class AnnotationUtils {
 
         // check String & byte[]
         if (TairaTypeConst.isByteArray(field) && annotation.bytes() <= 0) {
+            // non-recursive byte array can pass
+            if (!isRecursive) {
+                return;
+            }
             throw new TairaAnnotationException(
                 "Field [" + field.getName() + "] in class [" + clazz.getName() + "] should specify [bytes] value");
         }
@@ -174,12 +178,12 @@ class AnnotationUtils {
         if (!TairaTypeConst.isByteArray(field) && (TairaTypeConst.isSupportedCollection(field.getType())
             || field.getType().isArray())) {
             // tail field without length
-            if (fieldIndex < fieldsSize - 1 && annotation.length() == ParamField.LENGTH_DEFAULT) {
+            if (fieldIndex < fieldsSize - 1 && annotation.length() <= 0) {
                 throw new TairaAnnotationException(
                     "Field [" + field.getName() + "] in class [" + clazz.getName() + "] should specify [length] value");
             }
             // recursive TairaData tail field without length
-            if (fieldIndex == fieldsSize - 1 && isRecursive && annotation.length() == ParamField.LENGTH_DEFAULT) {
+            if (fieldIndex == fieldsSize - 1 && isRecursive && annotation.length() <= 0) {
                 throw new TairaAnnotationException(
                     "Field [" + field.getName() + "] in recursive class [" + clazz.getName()
                         + "] should specify [length] value");

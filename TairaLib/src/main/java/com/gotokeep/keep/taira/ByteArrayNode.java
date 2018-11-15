@@ -43,6 +43,12 @@ class ByteArrayNode extends Node {
     }
 
     @Override
+    public void evaluateSize(Object value) {
+        super.evaluateSize(value);
+        byteSize = valueToByteArray(value).length;
+    }
+
+    @Override
     public void serialize(ByteBuffer buffer, Object value) {
         byte[] byteValue = valueToByteArray(value);
         checkOverflow(byteValue);
@@ -56,7 +62,13 @@ class ByteArrayNode extends Node {
 
     @Override
     public Object deserialize(ByteBuffer buffer) {
-        byte[] bytes = new byte[byteSize];
+        byte[] bytes;
+        if (byteSize <= 0) {
+            // tail byte array
+            bytes = new byte[buffer.remaining()];
+        } else {
+            bytes = new byte[byteSize];
+        }
         buffer.get(bytes);
         if (String.class.equals(clazz)) {
             return new String(bytes, charset);

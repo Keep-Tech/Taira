@@ -73,7 +73,7 @@ class CollectionNode extends Node {
         int collectionLength = getCollectionLength(value);
         memberNode.evaluateSize(null);
         int memberByteSize = memberNode.byteSize;
-        if (length == ParamField.LENGTH_DEFAULT) {
+        if (length <= 0) {
             byteSize = collectionLength * memberByteSize;
         } else {
             byteSize = length * memberByteSize;
@@ -98,7 +98,7 @@ class CollectionNode extends Node {
         if (collection == null) {
             return null;
         }
-        if (length == ParamField.LENGTH_DEFAULT) {
+        if (length <= 0) {
             // buffer tail
             while (buffer.position() < buffer.limit()) {
                 collection.add(memberNode.deserialize(buffer));
@@ -152,7 +152,7 @@ class CollectionNode extends Node {
             }
         }
         // node with length, fill remain empty bytes
-        if (length != ParamField.LENGTH_DEFAULT) {
+        if (length > 0) {
             memberNode.evaluateSize(null);
             buffer.put(new byte[(length - collectionLength) * memberNode.byteSize]);
         }

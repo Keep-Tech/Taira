@@ -13,7 +13,7 @@
 Gradle
 ```gradle
 dependencies {
-    compile 'com.gotokeep.keep:taira:0.1.0'
+    compile 'com.gotokeep.keep:taira:0.1.1'
 }
 ```
 Pom
@@ -70,8 +70,8 @@ class Foo implements TairaData {
 
 > 一些限制：
 > order 必须是从 0 递增的连续整数，任意两个 field 的 order 不能相同
-> ByteArray 类型必须指定 bytes 值
-> length 用在最大 order 的字段上时可以省略，否则必须指定 length；嵌套的 TairaData 无论是否最大 order 都必须指定 length
+> ByteArray 类型必须指定 bytes 值，但是在非嵌套 TairaData 的最大 order 上可以不指定
+> length 用在最大 order 的字段上时可以省略，否则必须指定 length；嵌套的 TairaData 内部 field 无论是否最大 order 都必须指定 length
 
 ##### 字节序/字符集
 
@@ -88,7 +88,7 @@ class Foo implements TairaData {
 ## 简单对比 Gson 
 
 - [Sample](https://github.com/Keep-Tech/Taira/blob/master/TairaSample/src/main/java/com/gotokeep/keep/taira/samples/Main.java)  处理一个三层嵌套包含各种类型的 data class，执行 1000 次
-- 结果：序列化/反序列化速度快于 Gson，且数据长度只有 Gson 的 1/5
+- 结果：序列化/反序列化速度快于 Gson，且数据长度只有 Gson 的 1/5 - 1/3
 
 ```
 // 原始 data class 结构

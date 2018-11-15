@@ -60,7 +60,7 @@ abstract class Node {
     /**
      * evaluate current node byte size
      *
-     * current only TairaNode/CollectionNode should override
+     * current only TairaNode/CollectionNode/ByteArrayNode should override
      */
     public void evaluateSize(Object value) {}
 
