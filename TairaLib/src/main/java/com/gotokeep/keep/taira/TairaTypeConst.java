@@ -51,12 +51,12 @@ final class TairaTypeConst {
     private TairaTypeConst() {}
 
     /**
-     * get a intrinsic type processor
+     * get a primitive type processor
      *
      * @param clazz class
-     * @return intrinsic type
+     * @return primitive type
      */
-    public static TairaPrimitive findIntrinsic(Class clazz) {
+    public static TairaPrimitive findPrimitive(Class clazz) {
         for (TairaPrimitive type : TairaPrimitive.values()) {
             if (type.canProcess(clazz)) {
                 return type;

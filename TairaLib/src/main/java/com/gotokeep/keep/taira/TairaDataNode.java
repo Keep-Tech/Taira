@@ -89,9 +89,9 @@ class TairaDataNode extends Node {
         children.clear();
         List<Field> fields = AnnotationUtils.getSortedParamFields(clazz);
         for (Field field : fields) {
-            TairaPrimitive intrinsic = TairaTypeConst.findIntrinsic(field.getType());
-            if (intrinsic != null) {
-                children.add(new PrimitiveNode(field, intrinsic));
+            TairaPrimitive primitive = TairaTypeConst.findPrimitive(field.getType());
+            if (primitive != null) {
+                children.add(new PrimitiveNode(field, primitive));
                 continue;
             }
             if (TairaTypeConst.isTairaClass(field.getType())) {

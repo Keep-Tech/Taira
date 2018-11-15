@@ -52,7 +52,7 @@ class PrimitiveNode extends Node {
         this.field = field;
         this.type = type;
 
-        byteSize = evaluateIntrinsicType(field);
+        byteSize = evaluatePrimitiveSize(field);
     }
 
     @Override
@@ -71,7 +71,7 @@ class PrimitiveNode extends Node {
      *
      * @return size
      */
-    private int evaluateIntrinsicType(Field field) {
+    private int evaluatePrimitiveSize(Field field) {
         ParamField annotation = ReflectionUtils.getAnnotation(field, ParamField.class);
         int realLength = type.byteSize();
         int annotationLength = annotation.bytes();

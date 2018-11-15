@@ -106,7 +106,7 @@ public class ReflectionUtils {
     public static <T> T createParamInstance(Class<?> clazz) {
         T object;
         try {
-            TairaPrimitive processor = TairaTypeConst.findIntrinsic(clazz);
+            TairaPrimitive processor = TairaTypeConst.findPrimitive(clazz);
             if (processor != null) {
                 object = (T) processor.defaultValue();
             } else {
