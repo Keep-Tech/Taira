@@ -8,7 +8,10 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.code.gson:gson:2.8.5'
+    // use gradle dependencies
     compile 'com.gotokeep.keep:taira:0.1.1'
+    // use source code dependencies
+    // compile project(path: ':TairaLib')
 }
 
 sourceCompatibility = "1.6"
