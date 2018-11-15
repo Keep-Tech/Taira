@@ -13,7 +13,7 @@
 Gradle
 ```gradle
 dependencies {
-    compile 'com.gotokeep.keep:taira:0.1.1'
+    compile 'com.gotokeep.keep:taira:0.1.2'
 }
 ```
 Pom
