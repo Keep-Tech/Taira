@@ -45,7 +45,9 @@ class ByteArrayNode extends Node {
     @Override
     public void evaluateSize(Object value) {
         super.evaluateSize(value);
-        byteSize = valueToByteArray(value).length;
+        if (byteSize <= 0) {
+            byteSize = valueToByteArray(value).length;
+        }
     }
 
     @Override

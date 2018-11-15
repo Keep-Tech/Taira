@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.gotokeep.keep.taira.Taira;
 import com.gotokeep.keep.taira.TairaData;
 
+import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
@@ -80,10 +81,11 @@ public class Main {
         System.out.println("Taira serialize x 1000 time cost: " + (System.currentTimeMillis() - serializeStart));
         System.out.println("Taira serialize data size: " + fooBytes.length);
 
+        Taira deserializeTaira = new Taira(ByteOrder.BIG_ENDIAN);
         long deserializeStart = System.currentTimeMillis();
         Foo foo = null;
         for (int i = 0; i < 1000; i++) {
-            foo = Taira.DEFAULT.fromBytes(fooBytes, Foo.class);
+            foo = deserializeTaira.fromBytes(fooBytes, Foo.class);
         }
         System.out.println("Taira deserialize x 1000 time cost: " + (System.currentTimeMillis() - deserializeStart));
         System.out.println("Taira deserialize result: " + String.valueOf(foo));

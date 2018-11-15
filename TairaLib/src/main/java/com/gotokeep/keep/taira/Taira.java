@@ -150,7 +150,7 @@ public class Taira {
     }
 
     /**
-     * deserialize byte array to TairaData instance instance
+     * deserialize byte array to TairaData instance
      *
      * @param data byte array data
      * @param clazz TairaData type
@@ -175,7 +175,7 @@ public class Taira {
     }
 
     /**
-     * deserialize byte array to TairaData instance instance
+     * deserialize byte array to TairaData instance
      *
      * @param data byte array data
      * @param clazz TairaData type
