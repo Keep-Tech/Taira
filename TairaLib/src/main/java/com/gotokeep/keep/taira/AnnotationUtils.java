@@ -95,13 +95,13 @@ class AnnotationUtils {
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
             Class fieldType = field.getType();
-            PrimitiveProcessor intrinsicProcessor = TairaTypeConst.findIntrinsic(fieldType);
+            TairaPrimitive primitive = TairaTypeConst.findPrimitive(fieldType);
 
             // check ParamField
-            checkParamFieldUsage(i, fields.size(), field, clazz, intrinsicProcessor, isRecursive);
+            checkParamFieldUsage(i, fields.size(), field, clazz, primitive, isRecursive);
 
             // check Fields
-            if (intrinsicProcessor != null) {
+            if (primitive != null) {
                 continue;
             }
             // TairaData type，recursively check
@@ -128,12 +128,12 @@ class AnnotationUtils {
                     recursiveTypeSet.add(clazz);
                     checkAnnotationOrThrow(memberType, true, recursiveTypeSet);
                 } else {
-                    PrimitiveProcessor memberProcessor = TairaTypeConst.findIntrinsic(memberType);
+                    PrimitiveProcessor memberProcessor = TairaTypeConst.findPrimitive(memberType);
                     // unsupported member type
                     if (memberProcessor == null) {
                         throw new TairaAnnotationException(
                             "Member type of collection field [" + field.getName() + "] in class [" + clazz.getName()
-                                + "] can only be intrinsic type or TairaData");
+                                + "] can only be primitive type or TairaData");
                     }
                 }
                 continue;
@@ -149,7 +149,7 @@ class AnnotationUtils {
      * check ParamField
      */
     private static void checkParamFieldUsage(int fieldIndex, int fieldsSize, Field field, Class clazz,
-                                             PrimitiveProcessor fieldProcessor, boolean isRecursive) {
+                                             TairaPrimitive primitive, boolean isRecursive) {
         ParamField annotation = field.getAnnotation(ParamField.class);
 
         // check order
@@ -164,10 +164,10 @@ class AnnotationUtils {
                 "Field [" + field.getName() + "] in class [" + clazz.getName() + "] should specify [bytes] value");
         }
 
-        // check intrinsic type bytes overflow
-        if (fieldProcessor != null && annotation.bytes() > 0 && annotation.bytes() > fieldProcessor.byteSize()) {
+        // check primitive type bytes overflow
+        if (primitive != null && annotation.bytes() > 0 && annotation.bytes() > primitive.byteSize()) {
             throw new TairaAnnotationException("[bytes] on field [" + field.getName() + "] in class [" + clazz.getName()
-                + "] is too large (which should be lesser than or equal to " + fieldProcessor.byteSize() + ")");
+                + "] is too large (which should be lesser than or equal to " + primitive.byteSize() + ")");
         }
 
         // check collection & array length

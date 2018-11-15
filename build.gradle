@@ -4,7 +4,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {url 'https://dl.bintray.com/browntheprogrammer/keep'}
     }
 
     dependencies {
@@ -14,12 +13,3 @@ buildscript {
     }
 
 }
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven {url 'https://dl.bintray.com/browntheprogrammer/keep'}
-    }
-}
-

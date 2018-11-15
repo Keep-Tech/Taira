@@ -116,9 +116,9 @@ class CollectionNode extends Node {
     }
 
     private Node createMemberNode() {
-        TairaPrimitive intrinsic = TairaTypeConst.findIntrinsic(memberType);
-        if (intrinsic != null) {
-            return new PrimitiveNode(memberType, intrinsic);
+        TairaPrimitive primitive = TairaTypeConst.findPrimitive(memberType);
+        if (primitive != null) {
+            return new PrimitiveNode(memberType, primitive);
         } else if (TairaTypeConst.isTairaClass(memberType)) {
             return new TairaDataNode(memberType, charset);
         } else {
