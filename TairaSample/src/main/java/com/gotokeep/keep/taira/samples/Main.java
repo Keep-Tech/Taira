@@ -42,6 +42,7 @@ public class Main {
         foo.setDoubleField(123.21);
         foo.setBytesField(new byte[] { 11, 22, 33, 44 });
         foo.setStringField("world");
+        foo.setRemainsStringField("Hi Ro Hi Ro Ma U Hi Ka Ri No Na Ka");
 
         Bar bar = new Bar();
         bar.setFloatVal(123.2f);

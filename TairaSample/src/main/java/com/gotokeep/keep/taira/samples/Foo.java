@@ -45,7 +45,9 @@ public class Foo implements TairaData {
 
     @ParamField(order = 6, bytes = 5) private String stringField;
 
-    @ParamField(order = 7) private List<Integer> intListField;
+    @ParamField(order = 7, length = 3) private List<Integer> intListField;
+
+    @ParamField(order = 8) private String remainsStringField;
 
     public byte getByteField() {
         return byteField;
@@ -111,10 +113,19 @@ public class Foo implements TairaData {
         this.intListField = intListField;
     }
 
+    public String getRemainsStringField() {
+        return remainsStringField;
+    }
+
+    public void setRemainsStringField(String remainsStringField) {
+        this.remainsStringField = remainsStringField;
+    }
+
     @Override
     public String toString() {
         return "Foo{" + "byteField=" + byteField + ", barField=" + barField + ", intField=" + intField
             + ", doubleField=" + doubleField + ", charField=" + charField + ", bytesField=" + Arrays.toString(
-            bytesField) + ", stringField='" + stringField + '\'' + ", intListField=" + intListField + '}';
+            bytesField) + ", stringField='" + stringField + '\'' + ", intListField=" + intListField
+            + ", remainsStringField='" + remainsStringField + '\'' + '}';
     }
 }

@@ -34,11 +34,6 @@ import java.lang.annotation.Target;
 public @interface ParamField {
 
     /**
-     * default length value
-     */
-    int LENGTH_DEFAULT = Integer.MAX_VALUE;
-
-    /**
      * define a field order
      *
      * every two field order can not be equal, and order must be sequential
@@ -56,5 +51,5 @@ public @interface ParamField {
      *
      * tail field can ignore this
      */
-    int length() default LENGTH_DEFAULT;
+    int length() default 0;
 }

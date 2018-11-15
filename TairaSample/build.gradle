@@ -8,7 +8,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.code.gson:gson:2.8.5'
-    compile 'com.gotokeep.keep:taira:0.1.0'
+    compile 'com.gotokeep.keep:taira:0.1.1'
 }
 
 sourceCompatibility = "1.6"

@@ -62,7 +62,7 @@ bintray {
 
     pkg {
         repo = PROJ_NAME
-        name = PROJ_NAME
+        name = PROJ_ARTIFACTID
         licenses = ['MIT']
         vcsUrl = PROJ_VCSURL
         websiteUrl = PROJ_WEBSITEURL
