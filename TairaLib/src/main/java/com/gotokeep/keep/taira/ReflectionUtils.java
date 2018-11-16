@@ -128,14 +128,34 @@ public class ReflectionUtils {
      * @param annotationClazz Annotation type
      * @return fields list
      */
-    static List<Field> extractAnnotatedFields(Class<?> clazz, Class<? extends Annotation> annotationClazz) {
+    static List<Field> extractAnnotatedFields(Class<?> clazz,
+                                              Class<? extends Annotation> annotationClazz) {
+        return extractAnnotatedFields(clazz, annotationClazz, false);
+    }
+
+    /**
+     * get fields from class which has specified annotation
+     *
+     * @param clazz class type
+     * @param annotationClazz Annotation type
+     * @param hierarchically if check all parent classes' fields recursively
+     * @return fields list
+     */
+    static List<Field> extractAnnotatedFields(Class<?> clazz,
+                                              Class<? extends Annotation> annotationClazz,
+                                              boolean hierarchically) {
         List<Field> fields = new ArrayList<>();
-        Field[] allFields = clazz.getDeclaredFields();
-        for (Field field : allFields) {
-            if (field.isAnnotationPresent(annotationClazz)) {
-                fields.add(field);
+        do {
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.isAnnotationPresent(annotationClazz)) {
+                    fields.add(field);
+                }
             }
-        }
+            if (!hierarchically) {
+                break;
+            }
+            clazz = clazz.getSuperclass();
+        } while (clazz != null);
         return fields;
     }
 
