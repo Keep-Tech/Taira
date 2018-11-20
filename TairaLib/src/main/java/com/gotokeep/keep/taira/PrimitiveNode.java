@@ -34,14 +34,15 @@ class PrimitiveNode extends Node {
 
     private TairaPrimitive type;
 
+    private int bytes;
+
     /**
      * collection member node without field
      */
     PrimitiveNode(Class clazz, TairaPrimitive type) {
         super(clazz);
         this.type = type;
-
-        byteSize = type.byteSize();
+        bytes = type.byteSize();
     }
 
     /**
@@ -51,19 +52,23 @@ class PrimitiveNode extends Node {
         super(field);
         this.field = field;
         this.type = type;
+        bytes = evaluatePrimitiveSize(field);
+    }
 
-        byteSize = evaluatePrimitiveSize(field);
+    @Override
+    public int evaluateSize(Object value) {
+        return bytes;
     }
 
     @Override
     public void serialize(ByteBuffer buffer, Object value) {
         checkOverflow(value);
-        type.serialize(value == null ? type.defaultValue() : value, buffer, byteSize);
+        type.serialize(value == null ? type.defaultValue() : value, buffer, bytes);
     }
 
     @Override
     public Object deserialize(ByteBuffer buffer) {
-        return type.deserialize(buffer, byteSize);
+        return type.deserialize(buffer, bytes);
     }
 
     /**
@@ -93,7 +98,7 @@ class PrimitiveNode extends Node {
         } else {
             doubleValue = ((Number) value).doubleValue();
         }
-        double max = Math.pow(2, 8 * byteSize - 1);
+        double max = Math.pow(2, 8 * bytes - 1);
         if (doubleValue >= -max && doubleValue < max) {
             return;
         }
