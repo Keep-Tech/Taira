@@ -35,26 +35,38 @@ class ByteArrayNode extends Node {
 
     private Charset charset;
 
+    private int bytes;
+
     ByteArrayNode(Field field, Charset charset) {
         super(field);
         this.charset = charset;
-
-        byteSize = evaluateSize(field);
+        ParamField annotation = ReflectionUtils.getAnnotation(field, ParamField.class);
+        bytes = annotation.bytes();
     }
 
     @Override
-    public void evaluateSize(Object value) {
-        super.evaluateSize(value);
-        if (byteSize <= 0) {
-            byteSize = valueToByteArray(value).length;
+    public int evaluateSize(Object value) {
+        if (bytes <= 0 && value != null) {
+            return valueToByteArray(value).length;
         }
+        return bytes;
     }
 
     @Override
     public void serialize(ByteBuffer buffer, Object value) {
+        if (value == null) {
+            buffer.put(new byte[bytes]);
+            return;
+        }
         byte[] byteValue = valueToByteArray(value);
+        if (bytes <= 0) {
+            // tail without [bytes]
+            buffer.put(byteValue);
+            return;
+        }
+        // with [bytes]
         checkOverflow(byteValue);
-        int remainSize = byteSize - byteValue.length;
+        int remainSize = bytes - byteValue.length;
         buffer.put(byteValue);
         if (remainSize > 0) {
             // fill remains
@@ -64,36 +76,28 @@ class ByteArrayNode extends Node {
 
     @Override
     public Object deserialize(ByteBuffer buffer) {
-        byte[] bytes;
-        if (byteSize <= 0) {
+        byte[] bytesValue;
+        if (bytes <= 0) {
             // tail byte array
-            bytes = new byte[buffer.remaining()];
+            bytesValue = new byte[buffer.remaining()];
         } else {
-            bytes = new byte[byteSize];
+            bytesValue = new byte[bytes];
         }
-        buffer.get(bytes);
+        buffer.get(bytesValue);
         if (String.class.equals(clazz)) {
-            return new String(bytes, charset);
+            return new String(bytesValue, charset);
         } else {
-            return bytes;
+            return bytesValue;
         }
-    }
-
-    private int evaluateSize(Field field) {
-        ParamField annotation = ReflectionUtils.getAnnotation(field, ParamField.class);
-        return annotation.bytes();
     }
 
     private void checkOverflow(byte[] array) {
-        if (array.length > byteSize) {
+        if (array.length > bytes) {
             throw new TairaIllegalValueException("Field [" + field.getName() + "] overflow, [bytes] should be larger");
         }
     }
 
     private byte[] valueToByteArray(Object value) {
-        if (value == null) {
-            return new byte[byteSize];
-        }
         if (String.class.equals(clazz)) {
             return ((String) value).getBytes(charset);
         } else {

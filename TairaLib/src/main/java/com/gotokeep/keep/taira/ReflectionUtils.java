@@ -124,13 +124,15 @@ public class ReflectionUtils {
     /**
      * get fields from class which has specified annotation
      *
+     * hierarchically(parents' fields) by default
+     *
      * @param clazz class type
      * @param annotationClazz Annotation type
      * @return fields list
      */
     static List<Field> extractAnnotatedFields(Class<?> clazz,
                                               Class<? extends Annotation> annotationClazz) {
-        return extractAnnotatedFields(clazz, annotationClazz, false);
+        return extractAnnotatedFields(clazz, annotationClazz, true);
     }
 
     /**

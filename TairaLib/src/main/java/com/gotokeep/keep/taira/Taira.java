@@ -211,10 +211,10 @@ public class Taira {
 
     private <T extends TairaData> ByteBuffer serializeBuffer(T data) {
         TairaDataNode root = getTairaNode(data.getClass(), charset);
-        root.evaluateSize(data);
+        int byteSize = root.evaluateSize(data);
         ByteBuffer buffer;
         try {
-            buffer = ByteBuffer.allocate(root.getByteSize()).order(order);
+            buffer = ByteBuffer.allocate(byteSize).order(order);
         } catch (IndexOutOfBoundsException | IllegalStateException e) {
             throw new TairaInternalException(e);
         }

@@ -39,11 +39,6 @@ abstract class Node {
      */
     Field field;
 
-    /**
-     * node byte size in buffer
-     */
-    protected int byteSize;
-
     Node(Class clazz) {
         this.clazz = clazz;
     }
@@ -53,16 +48,12 @@ abstract class Node {
         this.clazz = field.getType();
     }
 
-    public int getByteSize() {
-        return byteSize;
-    }
-
     /**
      * evaluate current node byte size
      *
      * current only TairaNode/CollectionNode/ByteArrayNode should override
      */
-    public void evaluateSize(Object value) {}
+    public abstract int evaluateSize(Object value);
 
     /**
      * serialize current node value into buffer
