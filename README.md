@@ -13,7 +13,7 @@
 Gradle
 ```gradle
 dependencies {
-    compile 'com.gotokeep.keep:taira:0.1.2'
+    compile 'com.gotokeep.keep:taira:0.1.4'
 }
 ```
 Pom
@@ -21,7 +21,7 @@ Pom
 <dependency>
   <groupId>com.gotokeep.keep</groupId>
   <artifactId>taira</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.4</version>
   <type>pom</type>
 </dependency>
 ```

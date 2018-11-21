@@ -40,7 +40,7 @@ public class Taira {
     /**
      * default instance
      */
-    public static Taira DEFAULT = new Taira();
+    public static final Taira DEFAULT = new Taira();
 
     /**
      * debug switch
