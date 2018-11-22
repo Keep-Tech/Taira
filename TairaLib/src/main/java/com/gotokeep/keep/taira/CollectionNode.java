@@ -153,7 +153,7 @@ class CollectionNode extends Node {
         // node with length, fill remain empty bytes
         if (length > 0) {
             int memberByteSize = memberNode.evaluateSize(null);
-            buffer.put(new byte[(length - collectionLength) * memberByteSize]);
+            buffer.position(buffer.position() + (length - collectionLength) * memberByteSize);
         }
     }
 
