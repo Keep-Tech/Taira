@@ -68,7 +68,7 @@ class TairaDataNode extends Node {
     @Override
     public void serialize(ByteBuffer buffer, Object value) {
         if (value == null) {
-            buffer.put(new byte[evaluateSize(null)]);
+            buffer.position(buffer.position() + evaluateSize(null));
             return;
         }
         for (Node node : children) {

@@ -55,7 +55,7 @@ class ByteArrayNode extends Node {
     @Override
     public void serialize(ByteBuffer buffer, Object value) {
         if (value == null) {
-            buffer.put(new byte[bytes]);
+            buffer.position(buffer.position() + bytes);
             return;
         }
         byte[] byteValue = valueToByteArray(value);
@@ -70,7 +70,7 @@ class ByteArrayNode extends Node {
         buffer.put(byteValue);
         if (remainSize > 0) {
             // fill remains
-            buffer.put(new byte[remainSize]);
+            buffer.position(buffer.position() + remainSize);
         }
     }
 
