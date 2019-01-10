@@ -158,7 +158,7 @@ class CollectionNode extends Node {
     }
 
     private void checkOverflow(int memberCount) {
-        if (memberCount > length) {
+        if (length > 0 && memberCount > length) {
             throw new TairaIllegalValueException("Field [" + field.getName() + "] overflow, [length] should be larger");
         }
     }
